@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: test-service
+  annotations:
+    ipv6-node-port: "8080"
+spec:
+  selector:
+    app: test-apps
+  ports:
+  - port: 8080

@@ -1,0 +1,56 @@
+apiVersion: metacontroller.k8s.io/v1alpha1
+kind: DecoratorController
+metadata:
+  name: ipv6-node-port
+spec:
+  resources:
+  - apiVersion: v1
+    resource: services
+    annotationSelector:
+      matchExpressions:
+      - {key: ipv6-node-port, operator: Exists}
+  attachments:
+  - apiVersion: apps/v1
+    resource: deployments
+  hooks:
+    sync:
+      webhook:
+        url: http://ipv6-node-port.metacontroller/sync
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ipv6-node-port
+  namespace: metacontroller
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ipv6-node-port
+  template:
+    metadata:
+      labels:
+        app: ipv6-node-port
+    spec:
+      containers:
+      - name: controller
+        image: python:2.7
+        command: ["python", "/hooks/sync.py"]
+        volumeMounts:
+        - name: hooks
+          mountPath: /hooks
+      volumes:
+      - name: hooks
+        configMap:
+          name: ipv6-node-port
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ipv6-node-port
+  namespace: metacontroller
+spec:
+  selector:
+    app: ipv6-node-port
+  ports:
+  - port: 80
