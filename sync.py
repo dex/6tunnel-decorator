@@ -32,12 +32,12 @@ class Controller(BaseHTTPRequestHandler):
                   }
               },
               "spec": {
+                  "hostNetwork": True,
                   "containers": [
                       {
                           "name": "6tunnel",
                           "image": "bastianlemke/docker-6tunnel:latest",
-                          "command": ["6tunnel", "-d", "-6", str(port), "localhost", str(port)],
-                          "hostNetwork": "true"
+                          "command": ["6tunnel", "-d", "-6", str(port), "127.0.0.1", str(port)]
                       }
                   ]
               }
