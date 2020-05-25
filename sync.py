@@ -35,8 +35,8 @@ class Controller(BaseHTTPRequestHandler):
                   "containers": [
                       {
                           "name": "6tunnel",
-                          "image": "bastianlemke/docker-6tunnel:latest",
-                          "command": ["6tunnel", "-d", "-6", str(port), "127.0.0.1", str(port)]
+                          "image": "dex0827/docker-6tunnel:latest",
+                          "command": ["6tunnel", "-d", "-46", str(port), "127.0.0.1", str(port)]
                       }
                   ]
               }
