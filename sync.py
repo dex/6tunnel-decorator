@@ -14,12 +14,11 @@ class Controller(BaseHTTPRequestHandler):
     desired_attachments = [
       {
         "apiVersion": "apps/v1",
-        "kind": "Deployment",
+        "kind": "DaemonSet",
         "metadata": {
           "name": "ipv6-node-port-%d" % port
         },
         "spec": {
-          "replicas": 1,
           "selector": {
               "matchLabels": {
                   "app": "ipv6-node-port-%d" % port

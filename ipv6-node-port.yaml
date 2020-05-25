@@ -11,7 +11,7 @@ spec:
       - {key: ipv6-node-port, operator: Exists}
   attachments:
   - apiVersion: apps/v1
-    resource: deployments
+    resource: daemonsets
   hooks:
     sync:
       webhook:
